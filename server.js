@@ -31,6 +31,7 @@ var router = express.Router(); 				// get an instance of the express Router
 
 router.use(function(req, res, next) {
 	console.log('Requested: ' + req.url + '		Method: ' + req.method);
+	console.log('Req.body: %j', req.body);
 	next();
 });
 // just call the returned function
