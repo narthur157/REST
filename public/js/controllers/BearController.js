@@ -3,17 +3,22 @@ var app = angular.module('BearController', ['BearService']);
 app.controller('BearController', function($scope, Bear) {
 	$scope.bears = [];
 	$scope.name = "";
+	io.on('bearsUpdated', function(bears) {
+		console.log('update broadcast received: ' + bears);
+		$scope.bears = bears;
+		$scope.$apply();
+	});
 	function updateBears() {
 		Bear.get().then(function(resp) {
-			$scope.bears=resp.data;
+			$scope.bears=resp;
 		});
 	}
 	$scope.makeBear = function() {
-		//if ($scope.name != "")
-			Bear.create($scope.name).then(updateBears);
+		Bear.create($scope.name);
+		$scope.name = "";
 	};
 	$scope.deleteBear = function(id) {
-		if (undefined !== id) Bear.delete(id).then(updateBears);
+		if (undefined !== id) Bear.delete(id);
 	};
 	$scope.updateBear = function(id, name) {
 		if (undefined !== id) Bear.update(id, name);
