@@ -1,2 +1,6 @@
+# Lib folders
 node_modules/
 public/libs/
+
+# File types
+*.TMP

@@ -18,5 +18,6 @@ app.controller('BearController', function($scope, Bear) {
 	$scope.updateBear = function(id, name) {
 		if (undefined != id) Bear.update(id, name);
 	};
+	//$scope.$watch(bears)
 	updateBears();
 });

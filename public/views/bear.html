@@ -3,7 +3,7 @@
 	<h1>Yo bears</h1>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="bear in bears"> 
-			{{ bear.name }} <span class="badge" ng-click="deleteBear(bear._id)">x</span>
+			{{ bear.name }} <span class="badge" ng-click="deleteBear(bear._id)">Kill bear</span>
 
 		</li>
 
@@ -11,7 +11,7 @@
 	<div class="input-group">
 		<input type-"text" class="form-control" ng-model="name">
 		<span class="input-group-btn">
-			<button class="btn btn-default" type="button" ng-submit="makeBear()">Create bear</button>
+			<button class="btn btn-default" type="button" ng-click="makeBear()">Create bear</button>
 		</span>
 	</div>
 
