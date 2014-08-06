@@ -5,7 +5,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/home.html',
-			controller: 'MainContrller'
+			controller: 'MainController'
 		})
 
 		.when('/nerds', {
@@ -21,7 +21,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		.when('/bears', {
 			templateUrl: 'views/bear.html',
 			controller: 'BearController'
-		})
+		});
 
 	$locationProvider.html5Mode(true);
 }]);

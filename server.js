@@ -4,8 +4,9 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express'); 		// call express
-var app        = express(); 				// define our app using express
+var express = require('express.io');
+var app = express();
+app.http().io();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
@@ -29,14 +30,10 @@ app.use(express.static(__dirname + '/public'));
 var port = process.env.PORT || 8090; 		// set our port
 var router = express.Router(); 				// get an instance of the express Router
 
-router.use(function(req, res, next) {
-	console.log('Requested: ' + req.url + '		Method: ' + req.method);
-	console.log('Req.body: %j', req.body);
-	next();
-});
-// just call the returned function
-require('./app/routes')(app, router);
 
+// set up the routes
+require('./app/routes')(app);
+require('./app/eventRoutes')(app);
 app.listen(port);
 console.log('port ' + port);
 exports = module.exports = app;

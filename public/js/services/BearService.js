@@ -18,6 +18,6 @@ app.factory('Bear', ['$http', function($http) {
 		update : function(id, name) {
 			return $http.put('/api/bears/' + id, name);
 		}
-	}
+	};
 	
 }]);

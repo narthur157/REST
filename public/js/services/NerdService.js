@@ -17,6 +17,6 @@ app.factory('Nerd', ['$http', function($http) {
 		delete : function(id) {
 			return $http.delete('/api/nerds/' + id);
 		}
-	}		
+	};		
 
 }]);
