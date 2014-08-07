@@ -13,7 +13,7 @@ app.controller('ChatController', function($scope, Chat) {
 	});
 	io.emit('text:get');
 	function sendChange() {
-		if (loaded && lastReceivedText != $scope.text) {
+		if (loaded && (lastReceivedText != $scope.text)) {
 			Chat.update($scope.text);
 		}
 	}
