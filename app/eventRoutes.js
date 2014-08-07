@@ -1,14 +1,25 @@
 module.exports = function(app) {
 	var Bear = require('./models/bear');
-
+	var text = "";
 
 	app.io.route('ready', function (req) {
 		req.io.emit('talk', {
 			message: 'io event'
 		});
 	});
+	function textUpdated() {
+		console.log("text changed to: " + text);
+		app.io.broadcast('textUpdated', { 'text': text });
+	}
+	app.io.route('text', {
+		update: function(req) {
+			text = req.data.text;
+			textUpdated();
+		}
+	});
 	function bearsUpdated() {
 		Bear.find(function(err, bears) {
+			console.log("Broadcast update bears sent");
 			if (err)	// this is a really bad error to get
 				app.io.broadcast('err', err);
 			app.io.broadcast('bearsUpdated', bears)

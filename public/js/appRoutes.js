@@ -21,6 +21,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		.when('/bears', {
 			templateUrl: 'views/bear.html',
 			controller: 'BearController'
+		})
+
+		.when('/chat', {
+			templateUrl: 'views/chat.html',
+			controller: 'ChatController'
 		});
 
 	$locationProvider.html5Mode(true);
