@@ -7,14 +7,17 @@ module.exports = function(app) {
 			message: 'io event'
 		});
 	});
-	function textUpdated() {
+	function textUpdated(req) {
 		console.log("text changed to: " + text);
-		app.io.broadcast('textUpdated', { 'text': text });
+		req.io.broadcast('getText', { 'text': text });
 	}
 	app.io.route('text', {
 		update: function(req) {
 			text = req.data.text;
-			textUpdated();
+			textUpdated(req);
+		},
+		get: function(req) {
+			req.io.emit('getText', { 'text': text });
 		}
 	});
 	function bearsUpdated() {
