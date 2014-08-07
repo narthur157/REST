@@ -3,8 +3,8 @@ module.exports = function(app) {
 	var text = "";
 
 	app.io.route('ready', function (req) {
-		req.io.emit('talk', {
-			message: 'io event'
+		req.io.emit('announceVersion', {
+			message: 'The version is: fucking falafel'
 		});
 	});
 	function textUpdated(req) {
