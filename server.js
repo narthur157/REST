@@ -28,7 +28,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 
 var port = process.env.PORT || 8090; 		// set our port
-var router = express.Router(); 				// get an instance of the express Router
+//var router = express.Router(); 				// get an instance of the express Router
 
 
 // set up the routes

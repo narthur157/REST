@@ -3,12 +3,11 @@ module.exports = function(app) {
 	var text = "";
 
 	app.io.route('ready', function (req) {
-		req.io.emit('announceVersion', {
-			message: 'The version is: fucking falafel'
-		});
+		req.io.emit('log', 'We\'ve got another visitor, The version is: Angry Argon');
 	});
 	function textUpdated(req) {
 		console.log("text changed to: " + text);
+		app.io.broadcast('log', 'broadcast getText')
 		req.io.broadcast('getText', { 'text': text });
 	}
 	app.io.route('text', {
@@ -18,6 +17,7 @@ module.exports = function(app) {
 		},
 		get: function(req) {
 			req.io.emit('getText', { 'text': text });
+			req.io.emit('log', 'getText');
 		}
 	});
 	function bearsUpdated() {
