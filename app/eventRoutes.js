@@ -1,10 +1,8 @@
 module.exports = function(app) {
 	var Bear = require('./models/bear');
-	var text = "";
+	var text = ""; // this could get saved in the mongo database
+	// if I were going further with this, I'd want to separate bear routes from text routes in all likelyhood
 
-	app.io.route('ready', function (req) {
-		req.io.emit('log', 'We\'ve got another visitor, The version is: Angry Argon');
-	});
 	function textUpdated(req) {
 		console.log("text changed to: " + text);
 		app.io.broadcast('log', 'broadcast getText')
@@ -74,11 +72,5 @@ module.exports = function(app) {
 		req.io.emit('sendBears', {
 			bear: req.data
 		});
-	});
-	app.io.route('logging', function(req) {
-		// basic logging is very very helpful
-		console.log('Requested: ' + req.url + '		Method: ' + req.method);
-		console.log('Req.body: %j', req.body);
-		req.io.respond({hello: '???'});
 	});
 };

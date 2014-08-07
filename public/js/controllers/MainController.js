@@ -1,7 +1,7 @@
 var app = angular.module('MainController', []);
 
 app.controller('MainController', function($scope) {
-	// going to be more of a logging controller for now
+	// do some logging/report errors from mongo
 	io.on('err', function(err) {
 		console.log(err);
 	});

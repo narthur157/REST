@@ -57,7 +57,7 @@ module.exports = function(app) {
 			res.json({ message: 'Bear deleted' });
 		});
 	});
-	//app.use('/api')
+	// dot-slash vulnerabilities and..ah whatever
 	app.get('*', function(req, res) {
 	    res.sendfile('./public/index.html')
 	});

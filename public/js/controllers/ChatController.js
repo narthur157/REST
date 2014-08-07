@@ -17,6 +17,5 @@ app.controller('ChatController', function($scope, Chat) {
 			Chat.update($scope.text);
 		}
 	}
-
 	$scope.$watch('text', sendChange);
 });
