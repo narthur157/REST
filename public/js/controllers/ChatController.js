@@ -5,7 +5,7 @@ app.controller('ChatController', function($scope, Chat) {
 	var loaded = false;
 	var lastReceivedText = "";
 	io.on('getText', function(data) {
-		
+		lastReceivedText=data.text;
 		loaded=true;
 		console.log('from client: getText, loaded is ' + loaded);
 		$scope.text = data.text;
