@@ -1,60 +1,62 @@
 
 
 module.exports = function(app) {
-	var Bear = require('./models/bear');
+	var School = require('./models/school');
 
-	app.post('/api/bears', function(req, res) {
+	app.post('/api/schools', function(req, res) {
 
-		var bear = new Bear(); 		// create a new instance of the Bear model
-		bear.name = req.body.name;  // set the bears name (comes from the request)
+		var school = new School(); 		// create a new instance of the School model
+		school.classes = req.body.school.classes;  // set the schools name (comes from the request)
+		school.name = req.body.school.classes;
 
-		// save the bear and check for errors
-		bear.save(function(err) {
+		// save the school and check for errors
+		school.save(function(err) {
 			if (err)
 				res.send(err);
 
-			res.json({ message: 'Bear created!' });
+			res.json({ message: 'School created!' });
 		});
 
 	});
-	app.get('/api/bears', function(req, res) {
-		Bear.find(function(err, bears) {
+	app.get('/api/schools', function(req, res) {
+		School.find(function(err, schools) {
 			if (err)
 				res.send(err);
 
-			res.json(bears);
+			res.json(schools);
 		});
 	});
-	app.get('/api/bears/:bear_id', function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+	app.get('/api/schools/:school_id', function(req, res) {
+		School.findById(req.params.school_id, function(err, school) {
 			if (err)
 				res.send(err);
-			res.json(bear);
+			res.json(school);
 		});
 	});
-	app.put('/api/bears/:bear_id', function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+	app.put('/api/schools/:school_id', function(req, res) {
+		School.findById(req.params.school_id, function(err, school) {
 
 			if (err)
 				res.send(err);
-			bear.name = req.body.name;
-
-			bear.save(function(err) {
+			var givenSchool = req.body.school;
+			givenSchool._id = school._id;
+			school = givenSchool;
+			school.save(function(err) {
 				if (err)
 					res.send(err);
 
-				res.json({ message: 'Bear updated!' });
+				res.json({ message: 'School updated!' });
 			});
 		});
 	});
-	app.delete('/api/bears/:bear_id', function(req, res) {
-		Bear.remove({
-			_id: req.params.bear_id
-		}, function(err, bear) {
+	app.delete('/api/schools/:school_id', function(req, res) {
+		School.remove({
+			_id: req.params.school_id
+		}, function(err, school) {
 			if (err)
 				res.send(err);
 
-			res.json({ message: 'Bear deleted' });
+			res.json({ message: 'School deleted' });
 		});
 	});
 	// dot-slash vulnerabilities and..ah whatever
