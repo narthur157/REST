@@ -6,26 +6,35 @@
 	<base href="/">
 
 	<title>Starter Node and Angular</title>
+	<!-- Firebase -->
+	<script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
 
-	<!-- CSS -->
-	<link rel="stylesheet" href="http://www.writeurl.com/style.css" type="text/css">
-	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- CodeMirror -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
-	<!-- Firebase -->
-  	<script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
+
 	<!-- Firepad -->
-  	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
-  	<script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
+	<script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
+	<style>
+    html { height: 100%; }
+    body { margin: 0; height: 100%; position: relative; }
+      /* Height / width / positioning can be customized for your use case.
+         For demo purposes, we make firepad fill the entire browser. */
+    #firepad-container {
+      width: 50%;
+      height: 50%;
+    }
+  </style>
+	<!-- CSS -->
+	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+	<!--<link rel="stylesheet" href="css/style.css"> <! custom styles > -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- JS -->
 	<script src="libs/angular/angular.min.js"></script>
 	<script src="libs/angular-route/angular-route.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"> </script>
-    <script src="http://www.writeurl.com/script.js"></script>
 	<!-- ANGULAR CUSTOM -->	
 	<script src="js/controllers/MainController.js"></script>
 	<script src="js/controllers/BearController.js"></script>
@@ -34,100 +43,36 @@
 	<script src="js/appRoutes.js"></script>
 	<script src="js/app.js"></script>
 </head>
+
+	
+    <script>
+    	io = io.connect(); 
+      
+    </script>
 <div id="firepad-container"></div>
-<script>
-	function init() {
-		//// Initialize Firebase.
-		var firepadRef = new Firebase("https://burning-fire-602.firebaseio.com/");
 
-		//// Create CodeMirror (with lineWrapping on).
-		var codeMirror = CodeMirror(document.getElementById('firepad-container'), { lineWrapping: true });
+  <script>
+    function init() {
+      //// Initialize Firebase.
+      var firepadRef = new Firebase("https://burning-fire-602.firebaseio.com/");
+      // TODO: Replace above line with:
+      // var firepadRef = new Firebase('<YOUR FIREBASE URL>');
 
-		//// Create Firepad (with rich text toolbar and shortcuts enabled).
-		var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-		  { richTextToolbar: true, richTextShortcuts: true });
+      //// Create CodeMirror (with lineWrapping on).
+      var codeMirror = CodeMirror(document.getElementById('firepad-container'), { lineWrapping: true });
 
-		//// Initialize contents.
-		firepad.on('ready', function() {
-		if (firepad.isHistoryEmpty()) {
-		  firepad.setHtml(
-		      '<span style="font-size: 24px;">Rich-text editing with <span style="color: red">Firepad!</span></span><br/>\n' +
-		      '<br/>' +
-		      '<div style="font-size: 18px">' +
-		      'Supports:<br/>' +
-		      '<ul>' +
-		        '<li>Different ' +
-		          '<span style="font-family: impact">fonts,</span>' +
-		          '<span style="font-size: 24px;"> sizes, </span>' +
-		          '<span style="color: blue">and colors.</span>' +
-		        '</li>' +
-		        '<li>' +
-		          '<b>Bold, </b>' +
-		          '<i>italic, </i>' +
-		          '<u>and underline.</u>' +
-		        '</li>' +
-		        '<li>Lists' +
-		          '<ol>' +
-		            '<li>One</li>' +
-		            '<li>Two</li>' +
-		          '</ol>' +
-		        '</li>' +
-		        '<li>Undo / redo</li>' +
-		        '<li>Cursor / selection synchronization.</li>' +
-		        '<li><checkbox></checkbox> It supports customized entities.</li>' +
-		        '<li>And it\'s all fully collaborative!</li>' +
-		      '</ul>' +
-		      '</div>');
-			}
-	    });
+      //// Create Firepad (with rich text toolbar and shortcuts enabled).
+      var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+          { richTextToolbar: true, richTextShortcuts: true });
 
-		// An example of a complex custom entity.
-		firepad.registerEntity('checkbox', {
-			render: function (info, entityHandler) {
-			  	var inputElement = document.createElement('input');
-			  	inputElement.setAttribute('type', 'checkbox');
-			  	if(info.checked) {
-			    	inputElement.checked = 'checked';
-			    }
-				inputElement.addEventListener('click', function () {
-			    	entityHandler.replace({checked:this.checked});
-				});
-				return inputElement;
-			}.bind(this),
-			fromElement: function (element) {
-				var info = {};
-			if(element.hasAttribute('checked')) {
-				info.checked = true;
-			}
-	        	return info;
-	        },
-	        update: function (info, element) {
-	          	if (info.checked) {
-	            	element.checked = 'checked';
-	            } else {
-	            	element.checked = null;
-	            }
-	        },
-	        export: function (info) {
-				var inputElement = document.createElement('checkbox');
-				if(info.checked) {
-					inputElement.setAttribute('checked', true);
-				}
-				return inputElement;
-	        }
-      	});
+      //// Initialize contents.
+      firepad.on('ready', function() {
+      });
+
     }
-    init(); 
- </script>
-<script> io = io.connect(); 
-	var firepadRef = new Firebase('<firebase url...>');
-	var codeMirror = CodeMirror(firepadDiv, { lineWrapping: true });
-	var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-	    { richTextShortcuts: true, richTextToolbar: true });
+    init();
 </script>
 <body ng-app="sampleApp" ng-controller="MainController">
-<div class="container">
-
 	<!-- HEADER -->
 	<nav class="navbar navbar-inverse">
 		<div class="navbar-header">
@@ -143,4 +88,5 @@
 	<div ng-view> </div>
 </div>
 </body>
+
 </html>

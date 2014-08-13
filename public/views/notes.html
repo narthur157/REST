@@ -1,7 +1,12 @@
 
 <div class="jumbotron text-center">
 	<h1>Real-time note taking eyo</h1>
-	<div ng-controller="NoteController" id='editor'>
+	<div ng-controller="NoteController" id="firepad">
 	</div>
-	
+	<script>
+		var firepadRef = new Firebase('https://burning-fire-602.firebaseio.com/');
+      	var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
+      	var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+          { richTextShortcuts: true, richTextToolbar: true });
+    </script>
 </div>

@@ -59,6 +59,9 @@ module.exports = function(app) {
 			res.json({ message: 'School deleted' });
 		});
 	});
+	app.get('/testing', function(req, res){ 
+		res.sendfile('./public/test.html')
+	});
 	// dot-slash vulnerabilities and..ah whatever
 	app.get('*', function(req, res) {
 	    res.sendfile('./public/index.html')

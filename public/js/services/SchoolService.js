@@ -8,7 +8,7 @@ app.factory('School', ['$http', '$q', function($http, $q) {
 		},
 
 		create : function(school) {
-			return $http.post('/api/schools', school)
+			return $http.post('/api/schools', school);
 		},
 
 		delete : function(id) {
