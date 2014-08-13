@@ -8,26 +8,18 @@
 	<title>Starter Node and Angular</title>
 	<!-- Firebase -->
 	<script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
-
+	<script src="https://cdn.firebase.com/js/simple-login/1.6.2/firebase-simple-login.js"></script>
 	<!-- CodeMirror -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
+	
 
 	<!-- Firepad -->
 	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/0.1.4/firepad.css" />
 	<script src="https://cdn.firebase.com/libs/firepad/0.1.4/firepad-min.js"></script>
-	<style>
-    html { height: 100%; }
-    body { margin: 0; height: 100%; position: relative; }
-      /* Height / width / positioning can be customized for your use case.
-         For demo purposes, we make firepad fill the entire browser. */
-    #firepad-container {
-      width: 50%;
-      height: 50%;
-    }
-  </style>
+	
 	<!-- CSS -->
 	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css" />
 	<!--<link rel="stylesheet" href="css/style.css"> <! custom styles > -->
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- JS -->
@@ -45,33 +37,11 @@
 </head>
 
 	
-    <script>
-    	io = io.connect(); 
-      
-    </script>
-<div id="firepad-container"></div>
-
-  <script>
-    function init() {
-      //// Initialize Firebase.
-      var firepadRef = new Firebase("https://burning-fire-602.firebaseio.com/");
-      // TODO: Replace above line with:
-      // var firepadRef = new Firebase('<YOUR FIREBASE URL>');
-
-      //// Create CodeMirror (with lineWrapping on).
-      var codeMirror = CodeMirror(document.getElementById('firepad-container'), { lineWrapping: true });
-
-      //// Create Firepad (with rich text toolbar and shortcuts enabled).
-      var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-          { richTextToolbar: true, richTextShortcuts: true });
-
-      //// Initialize contents.
-      firepad.on('ready', function() {
-      });
-
-    }
-    init();
+<script>
+	io = io.connect(); 
+	
 </script>
+
 <body ng-app="sampleApp" ng-controller="MainController">
 	<!-- HEADER -->
 	<nav class="navbar navbar-inverse">
