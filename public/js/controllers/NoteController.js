@@ -3,7 +3,7 @@ var app = angular.module('NoteController', []);
 app.controller('NoteController', function($scope) {
 	$scope.school = "Binghamton";
 	$scope.classIdentifier = "CS350";
-	$scope.lecture = "anotherLecture";
+	$scope.lecture = "aLecture";
 	$scope.authenticated = false;
 	$scope.newSchool = function() {
 
@@ -26,26 +26,23 @@ app.controller('NoteController', function($scope) {
 				$scope.authenticated = true;
 				$scope.$apply();
 				console.log($scope.authenticated);
-				var baseUri = $scope.school + "/" + $scope.classIdentifier + "/" + $scope.lecture;
-				outerRef = new Firebase("https://burning-fire-602.firebaseio.com/web/data/" + baseUri);
-				console.log(outerRef);
-				outerRef.once("value", function(snapshot) {
-					console.log(val);
-					var val = snapshot.val();
-					val.forEach(function(noteSnapshot) {
-
+				var baseUri = "https://burning-fire-602.firebaseio.com/web/data/" + $scope.school + "/" + $scope.classIdentifier + "/" + $scope.lecture;
+				outerRef = new Firebase(baseUri);
+				var query = outerRef.startAt();
+				query.once("value", function(notesSnapshot) {
+					notesSnapshot.forEach(function(val) {
+						console.log(val);
 					});
-				}, function(err) {
-						console.log('outerRef.once error?');
 				});
-				firepadRef = new Firebase("https://burning-fire-602.firebaseio.com/web/data/" + baseUri + "/" + usr.uid);
+
+				firepadRef = new Firebase(baseUri + "/" + usr.uid);
 				init('usersPad', usr.uid);
 
 			}
 		});
 	$scope.login = function() {
 		authClient.login('google');
-	}
+	};
 	function init(cssId, usrId) {		
 		//// Create CodeMirror (with lineWrapping on).
 		// this needs to create rather than get it seems
