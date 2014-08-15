@@ -31,14 +31,14 @@ app.controller('NoteController', function($scope) {
 				var query = outerRef.startAt();
 				query.once("value", function(notesSnapshot) {
 					var val = notesSnapshot.val();
-					//_.forEach(val)
-					// notesSnapshot.forEach(function(val) {
-					// 	val=val.val();
-					// 	console.log(val);
-					// 	var newRef = new Firebase(baseUri + "/" + val.users);
-					// 	init(val, val, newRef);
-					// 	otherNotes.push(newRef);
-					// });
+					console.log(val);
+					_.forEach(_.keys(val),function(key) {
+						console.log(key);
+						var newRef = new Firebase(baseUri + "/" + key);
+
+						init(key, key, newRef);
+						otherNotes.push(newRef);
+					});
 				});
 
 				firepadRef = new Firebase(baseUri + "/" + usr.uid);
@@ -58,6 +58,12 @@ app.controller('NoteController', function($scope) {
 		// this needs to create rather than get it seems
 		var element = document.createElement('div');
 		element.id = cssId;
+		// YOLO ANTIPATTERN LIVE FAST DIE YOUNG #IDGAF #WINNING #SCREWTHEPATTERN #YEEEEEEEEEEEEEEEEEEEEEEEEAH #LOOKSLIKEAPYTHONCOMMENT
+		document.body.appendChild(element);
+		console.log(element);
+		console.log(cssId);
+		console.log(fireRef);
+		
 		var codeMirror = CodeMirror(document.getElementById(cssId), { lineWrapping: true });
 		//// Create Firepad (with rich text toolbar and shortcuts enabled).
 		var myNotes = Firepad.fromCodeMirror(fireRef, codeMirror,
