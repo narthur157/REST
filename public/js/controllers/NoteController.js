@@ -11,7 +11,7 @@ app.controller('NoteController', function($scope) {
 	var firepadRef = new Firebase("https://burning-fire-602.firebaseio.com/web/data/");
 	var outerRef = null;
 	var usr = null;
-	var otherNotes = null;
+	var otherNotes = [];
 	var authClient = new FirebaseSimpleLogin(firepadRef, function(error, user) {
 			if (error) 
 				console.log(error);
@@ -25,32 +25,42 @@ app.controller('NoteController', function($scope) {
 				usr = user;
 				$scope.authenticated = true;
 				$scope.$apply();
-				console.log($scope.authenticated);
+
 				var baseUri = "https://burning-fire-602.firebaseio.com/web/data/" + $scope.school + "/" + $scope.classIdentifier + "/" + $scope.lecture;
 				outerRef = new Firebase(baseUri);
 				var query = outerRef.startAt();
 				query.once("value", function(notesSnapshot) {
-					notesSnapshot.forEach(function(val) {
-						console.log(val);
-					});
+					var val = notesSnapshot.val();
+					//_.forEach(val)
+					// notesSnapshot.forEach(function(val) {
+					// 	val=val.val();
+					// 	console.log(val);
+					// 	var newRef = new Firebase(baseUri + "/" + val.users);
+					// 	init(val, val, newRef);
+					// 	otherNotes.push(newRef);
+					// });
 				});
 
 				firepadRef = new Firebase(baseUri + "/" + usr.uid);
-				init('usersPad', usr.uid);
+				init('usersPad', usr.uid, firepadRef);
 
 			}
 		});
 	$scope.login = function() {
 		authClient.login('google');
 	};
-	function init(cssId, usrId) {		
+	$scope.logout = function() {
+		authClient.logout();
+		authenticated=false;
+	};
+	function init(cssId, usrId, fireRef) {		
 		//// Create CodeMirror (with lineWrapping on).
 		// this needs to create rather than get it seems
 		var element = document.createElement('div');
 		element.id = cssId;
 		var codeMirror = CodeMirror(document.getElementById(cssId), { lineWrapping: true });
 		//// Create Firepad (with rich text toolbar and shortcuts enabled).
-		var myNotes = Firepad.fromCodeMirror(firepadRef, codeMirror,
+		var myNotes = Firepad.fromCodeMirror(fireRef, codeMirror,
 			{ richTextToolbar: true, richTextShortcuts: true, userId: usrId });
 
 		//// Initialize contents.
