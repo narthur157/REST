@@ -35,9 +35,10 @@ app.controller('NoteController', function($scope) {
 					_.forEach(_.keys(val),function(key) {
 						console.log(key);
 						var newRef = new Firebase(baseUri + "/" + key);
-
-						init(key, key, newRef);
-						otherNotes.push(newRef);
+						if (key !== usr.uid) {
+							init(key, key, newRef);
+							otherNotes.push(newRef);
+						}		
 					});
 				});
 
@@ -59,7 +60,7 @@ app.controller('NoteController', function($scope) {
 		var element = document.createElement('div');
 		element.id = cssId;
 		// YOLO ANTIPATTERN LIVE FAST DIE YOUNG #IDGAF #WINNING #SCREWTHEPATTERN #YEEEEEEEEEEEEEEEEEEEEEEEEAH #LOOKSLIKEAPYTHONCOMMENT
-		document.body.appendChild(element);
+		document.getElementById('contentDiv').appendChild(element);
 		console.log(element);
 		console.log(cssId);
 		console.log(fireRef);

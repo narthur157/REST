@@ -1,5 +1,5 @@
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" id="contentDiv">
 	<!--<h1>Real-time note taking eyo</h1>-->
 	<style>
 	    .firepad {
@@ -15,13 +15,13 @@
 	    	display: none;
 	    }
 
-  	</style>
-  	<button type="button" class="btn btn-default btn-lg" ng-click="login()" ng-show="!authenticated">
-  		<span class="glyphicon glyphicon-link"></span> Let's get authenticated
-  	</button>
-  	<button type="button" class="btn btn-default btn-lg" ng-click="logout()" ng-show="authenticated">
-  		<span class="glyphicon glyphicon-link"></span> Let's get un-authenticated
-  	</button>
+  </style>
+	<button type="button" class="btn btn-default btn-lg" ng-click="login()" ng-show="!authenticated">
+		<span class="glyphicon glyphicon-link"></span> Let's get authenticated
+	</button>
+	<button type="button" class="btn btn-default btn-lg" ng-click="logout()" ng-show="authenticated">
+		<span class="glyphicon glyphicon-link"></span> Let's get un-authenticated
+	</button>
 
 	<div id="usersPad">
 	</div>
