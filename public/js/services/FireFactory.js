@@ -1,6 +1,6 @@
 var app = angular.module('FireFactory', []);
 
-app.factory('FireFactory', function() {
+app.factory('FireFactory', function($q) {
 
 	var _rootUri = "https://burning-fire-602.firebaseio.com/web/data/";
 	var _lectureUri = null;
@@ -22,19 +22,26 @@ app.factory('FireFactory', function() {
 	service.authClient = null;
 
 	service.otherNotes = [];
-
+	function makeNoteModel(snapshot) {
+		// snapshot must be of the note
+		var deferred = $q.defer();
+		getNameFromId(snapshot.name()).then(function(displayName) {
+			console.log('resolving note');
+			deferred.resolve({
+					'uid': snapshot.name(),
+					'displayName': displayName,
+					'note': snapshot.val()
+				});
+		});
+		return deferred.promise;
+	}
 	function setupConnections() {
 
 		service.lectureRef.on('child_added', function(snapshot) {
 			if (snapshot.name() !== service.user.uid) {
-				//console.log('name: ' + snapshot.name);
-				service.otherNotes.push(
-					{ 
-						'uid': snapshot.name(),
-						'displayName': getNameFromId(snapshot.name()),
-						'note': snapshot.val()
-					}
-				);
+				makeNoteModel(snapshot).then(function(note) {
+					service.otherNotes.push(note);
+				});
 			}
 		});
 
@@ -42,16 +49,21 @@ app.factory('FireFactory', function() {
 		service.createPad('usersPad', service.user.uid, service.userRef);
 	}
 	function getNameFromId(id) {
-
+		var deferred = $q.defer();
 		if (!service.lectureRef) throw "LectureRefNull";
 		if (!id) throw "getNameFromIdNullId";
 		service.rootRef.child('users').startAt().once('value', function(snapshot) {
 			snapshot.forEach(function(userSnapshot) {
-				if (userSnapshot.name() === id) {
-					return userSnapshot.val().displayName;
+				var val = userSnapshot.val();
+				var uid = val.provider +':' + val.provider_id;
+				console.log(uid + ' : ' + id);
+				if (uid === id) {
+					console.log('resolving name');
+					deferred.resolve(val.displayName);
 				}
 			});
 		});
+		return deferred.promise;
 	}
 	service.createPad = function(cssId, usrId, fireRef) {
 
@@ -79,8 +91,8 @@ app.factory('FireFactory', function() {
 	};
 	service.getNote = function(selectedNote) {
 
-		service.selectedRef = new Firebase(_rootUri + "/" + usr.uid);
-		createPad(selectedNote, selectedNote, service.selectedRef);
+		this.selectedRef = new Firebase(_rootUri + "/" + this.user.uid);
+		this.createPad(selectedNote, selectedNote, this.selectedRef);
 	};
 
 	service.setup = function(school, classIdentifier, lecture) {
@@ -104,15 +116,13 @@ app.factory('FireFactory', function() {
 					provider_id: usr.id
 				});
 				service.lectureRef.startAt().once('value', function(snapshot) {
-					snapshot.forEach(function(note) {
-						service.otherNotes.push(
-							{ 
-								'uid': note.name(),
-								'displayName': getNameFromId(note.name()),
-								'note': note.val()
-							}
-						);
-						console.log(service.otherNotes);
+					snapshot.forEach(function(noteSnapshot) {
+						var promise = makeNoteModel(noteSnapshot);
+						console.log(promise);
+						promise.then(function(note) {
+								service.otherNotes.push(note);
+								console.log(service.otherNotes);
+						});
 					});
 				});
 				service.user = usr;

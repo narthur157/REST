@@ -11,8 +11,8 @@ app.controller('NoteController', function($scope, FireFactory) {
 	var fireManager = FireFactory;
 	fireManager.setup($scope.school, $scope.classIdentifier, $scope.lecture);
 	$scope.otherNotes=fireManager.otherNotes;	// reference magic
-	console.log($scope.otherNotes);
-	$scope.$watch('otherNotes', function() { console.log($scope.otherNotes); });
+	
+	//$scope.$watch('otherNotes', function() { console.log($scope.otherNotes); });
 	$scope.login = function() {
 		fireManager.authClient.login('google');
 		if (fireManager.authClient) $scope.authenticated = true;
