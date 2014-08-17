@@ -1,15 +1,22 @@
 
-<div class="jumbotron text-center" id="contentDiv">
+<div class="jumbotron" id="contentDiv">
 	<!--<h1>Real-time note taking eyo</h1>-->
 	<style>
 	    .firepad {
-      		width: 700px;
+          margin-left: auto;
+          margin-right: auto;
+      		width: 60%;
       		height: 450px;
-      		background-color: #222; /* dark orange background */
+      		background-color: #d9d9d9;
       		border-radius-bottom: 4px;
     	}
-    	.CodeMirror {
+      .firepad-toolbar-wrapper {
+        margin-left: 11%;
+        
+      }
+    	.CodeMirror-code {
     		border-radius: 4px;
+
     	}
 	    a.powered-by-firepad {
 	    	display: none;
@@ -22,7 +29,9 @@
 	<button type="button" class="btn btn-default btn-lg" ng-click="logout()" ng-show="authenticated">
 		<span class="glyphicon glyphicon-link"></span> Let's get un-authenticated
 	</button>
-
+  <span ng-repeat="note in otherNotes">
+    <li ng-click="showNote(note.uid)">{{note.displayName}}</li>
+  </span>
 	<div id="usersPad">
 	</div>
 	

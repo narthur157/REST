@@ -1,2 +1,2 @@
 angular.module('sampleApp', 
-	['ngRoute', 'appRoutes', 'MainController', 'NoteController', 'BearController', 'BearService']);
+	['ngRoute', 'appRoutes', 'MainController', 'NoteController', 'FireFactory']);
