@@ -6,24 +6,40 @@ app.controller('NoteController', function($scope, FireFactory) {
 	$scope.lecture = "aLecture";
 	$scope.authenticated = false;
 	$scope.otherNotes = [];
+	$scope.message = "";
+	$scope.chatLog = "";
 
 	// holds all sorts of nonsense
 	var fireManager = FireFactory;
-	fireManager.setup($scope.school, $scope.classIdentifier, $scope.lecture);
-	$scope.otherNotes=fireManager.otherNotes;	// reference magic
-	
+
+	fireManager.setup($scope.school, $scope.classIdentifier, $scope.lecture, function() {
+		$scope.authenticated=true;
+		$scope.$apply();
+	});
+	$scope.otherNotes = fireManager.otherNotes;	// reference magic
+	$scope.chatLog = fireManager.chatLog;
 	//$scope.$watch('otherNotes', function() { console.log($scope.otherNotes); });
 	$scope.login = function() {
 		fireManager.authClient.login('google');
-		if (fireManager.authClient) $scope.authenticated = true;
+		if (fireManager.authClient) {
+			$scope.authenticated = true;
+			$scope.$apply();
+		}
 	};
 
 	$scope.logout = function() {
 		fireManager.authClient.logout();
 		$scope.authenticated=false;
+		$scope.$apply();
 	};
 
 	$scope.showNote = function(id) {
+		console.log($scope.otherNotes);
+		console.log(_.where($scope.otherNotes, { 'uid': id}));
 		fireManager.getNote(id);
 	};    
+
+	$scope.sendMessage = function(message) {
+		fireManager.sendChatMessage(message);
+	};
 });

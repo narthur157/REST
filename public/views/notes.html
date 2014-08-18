@@ -1,5 +1,5 @@
 
-<div class="jumbotron" id="contentDiv">
+<div class='container-fluid' id="contentDiv">
 	<!--<h1>Real-time note taking eyo</h1>-->
 	<style>
 	    .firepad {
@@ -23,16 +23,39 @@
 	    }
 
   </style>
-	<button type="button" class="btn btn-default btn-lg" ng-click="login()" ng-show="!authenticated">
-		<span class="glyphicon glyphicon-link"></span> Let's get authenticated
-	</button>
-	<button type="button" class="btn btn-default btn-lg" ng-click="logout()" ng-show="authenticated">
-		<span class="glyphicon glyphicon-link"></span> Let's get un-authenticated
-	</button>
+  <button type="button" class="btn btn-default btn-lg" ng-click="login()" ng-show="!authenticated">
+    <span class="glyphicon glyphicon-link"></span> Sign in
+  </button>
+  <button type="button" class="btn btn-default btn-lg" ng-click="logout()" ng-show="authenticated">
+    <span class="glyphicon glyphicon-link"></span> Sign out
+  </button>	
   <span ng-repeat="note in otherNotes">
     <li ng-click="showNote(note.uid)">{{note.displayName}}</li>
   </span>
-	<div id="usersPad">
-	</div>
-	
+  
+  <div class="row">
+
+    <div class="col">
+      <div class="well">
+        <p ng-repeat='message in chatLog'>
+          <span class='pull-left text-info'> {{ message.user }}:   </span>
+          <span>&nbsp;&nbsp;&nbsp;{{ message.text }} </span>
+          <span class='pull-right text-info'> {{ message.time }} </span>
+        </p>
+      </div>
+      <form role='form' novalidate name='form'>
+        <div class='form-group'>
+          <input type='text'
+          required
+          ng-max='50'
+          ng-model='message'
+          focus>
+          <button class='btn btn-sm btn-primary'
+          ng-enable='form.$valid'
+          ng-click='sendMessage(message)'>Send</button>
+        </div>
+      </form>
+    </div>
+    <div class="col" id="usersPad"></div>
+  </div>
 </div>
