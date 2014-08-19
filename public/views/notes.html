@@ -1,4 +1,4 @@
-
+<div id="firechat-wrapper"><script> $('a.dropdown-toggle').click(function(ev) { ev.preventDefault(); return false; });</script></div>
 <div class='container-fluid' id="contentDiv">
 	<!--<h1>Real-time note taking eyo</h1>-->
 	<style>
@@ -36,26 +36,10 @@
   <div class="row">
 
     <div class="col">
-      <div class="well">
-        <p ng-repeat='message in chatLog'>
-          <span class='pull-left text-info'> {{ message.user }}:   </span>
-          <span>&nbsp;&nbsp;&nbsp;{{ message.text }} </span>
-          <span class='pull-right text-info'> {{ message.time }} </span>
-        </p>
+      
       </div>
-      <form role='form' novalidate name='form'>
-        <div class='form-group'>
-          <input type='text'
-          required
-          ng-max='50'
-          ng-model='message'
-          focus>
-          <button class='btn btn-sm btn-primary'
-          ng-enable='form.$valid'
-          ng-click='sendMessage(message)'>Send</button>
-        </div>
-      </form>
-    </div>
     <div class="col" id="usersPad"></div>
   </div>
+
+  <div class="row"> {{ data }} </div>
 </div>

@@ -1,10 +1,11 @@
 {
-	"name": "node-api",
+	"name": "note-overflow",
+	"version": "0.0.1",
 	"main": "server.js",
 	"scripts": {
 		"start": "grunt"
 	},
-	"description": "Possibly a collaborative note taking app",
+	"description": "A collaborative note taking app",
 	"dependencies": {
 		"express.io": "~1.1",
 		"mongoose": "~3.6.13",
