@@ -1,11 +1,9 @@
-<div id="firechat-wrapper"><script> $('a.dropdown-toggle').click(function(ev) { ev.preventDefault(); return false; });</script></div>
 <div class='container-fluid' id="contentDiv">
-	<!--<h1>Real-time note taking eyo</h1>-->
 	<style>
 	    .firepad {
-          margin-left: auto;
-          margin-right: auto;
-      		width: 60%;
+          /*margin-left: auto;
+          margin-right: auto;*/
+      		width: 100%;
       		height: 450px;
       		background-color: #d9d9d9;
       		border-radius-bottom: 4px;
@@ -34,12 +32,10 @@
   </span>
   
   <div class="row">
-
-    <div class="col">
-      
-      </div>
-    <div class="col" id="usersPad"></div>
+    <div class="col-lg-6" id="firechat-wrapper">
+      <script> $('a.dropdown-toggle').click(function(ev) { ev.preventDefault(); return false; });
+      </script>
+    </div>     
+    <div class="col-lg-6" id="usersPad"></div>
   </div>
-
-  <div class="row"> {{ data }} </div>
 </div>
