@@ -22,9 +22,6 @@ app.controller('NoteController', ["$scope", 'FireFactory', "$firebase", function
         var sync = $firebase(ref);
         var syncObject = sync.$asObject();
         syncObject.$bindTo($scope, "data");
-        var chatRef = new Firebase("https://burning-fire-602.firebaseio.com/web/data/" + $scope.school + "/" + $scope.classIdentifier + "/" + $scope.lecture + "/chat");
-        var chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
-        chat.setUser(fireManager.user.uid, fireManager.user.displayName);
     });
     $scope.otherNotes = fireManager.otherNotes;	// reference magic
     $scope.chatLog = fireManager.chatLog;

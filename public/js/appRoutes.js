@@ -7,12 +7,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			templateUrl: 'views/home.html',
 			controller: 'MainController'
 		})
-
-		.when('/bears', {
-			templateUrl: 'views/bear.html',
-			controller: 'BearController'
-		})
-
 		.when('/notes', {
 			templateUrl: 'views/notes.html',
 			controller: 'NoteController'

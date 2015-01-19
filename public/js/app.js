@@ -1,2 +1,2 @@
-angular.module('sampleApp', 
+angular.module('noteOverflow', 
 	['ngRoute', 'appRoutes', 'MainController', 'NoteController', 'FireFactory']);
