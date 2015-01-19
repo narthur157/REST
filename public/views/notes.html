@@ -1,0 +1,41 @@
+<div class='container-fluid' id="contentDiv">
+	<style>
+	    .firepad {
+          /*margin-left: auto;
+          margin-right: auto;*/
+      		width: 100%;
+      		height: 450px;
+      		background-color: #d9d9d9;
+      		border-radius-bottom: 4px;
+    	}
+      .firepad-toolbar-wrapper {
+        margin-left: 11%;
+        
+      }
+    	.CodeMirror-code {
+    		border-radius: 4px;
+
+    	}
+	    a.powered-by-firepad {
+	    	display: none;
+	    }
+
+  </style>
+  <button type="button" class="btn btn-default btn-lg" ng-click="login()" ng-show="!authenticated">
+    <span class="glyphicon glyphicon-link"></span> Sign in
+  </button>
+  <button type="button" class="btn btn-default btn-lg" ng-click="logout()" ng-show="authenticated">
+    <span class="glyphicon glyphicon-link"></span> Sign out
+  </button>	
+  <span ng-repeat="note in otherNotes">
+    <li ng-click="showNote(note.uid)">{{note.displayName}}</li>
+  </span>
+  
+  <div class="row">
+    <div class="col-lg-6" id="firechat-wrapper">
+      <script> $('a.dropdown-toggle').click(function(ev) { ev.preventDefault(); return false; });
+      </script>
+    </div>     
+    <div class="col-lg-6" id="usersPad"></div>
+  </div>
+</div>

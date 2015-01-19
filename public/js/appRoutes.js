@@ -8,25 +8,15 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			controller: 'MainController'
 		})
 
-		.when('/nerds', {
-			templateUrl: 'views/nerd.html',
-			controller: 'NerdController'
-		})
-
-		.when('/geeks', {
-			templateUrl: 'views/geek.html',
-			controller: 'GeekController'
-		})
-
 		.when('/bears', {
 			templateUrl: 'views/bear.html',
 			controller: 'BearController'
 		})
 
-		.when('/chat', {
-			templateUrl: 'views/chat.html',
-			controller: 'ChatController'
+		.when('/notes', {
+			templateUrl: 'views/notes.html',
+			controller: 'NoteController'
 		});
-
+		
 	$locationProvider.html5Mode(true);
 }]);

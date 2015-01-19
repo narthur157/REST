@@ -10,11 +10,6 @@ app.http().io();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-
-var db = require('./config/db');
-var mongoose   = require('mongoose');
-mongoose.connect(db.url); // connect to our database
-
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.json());
@@ -28,8 +23,8 @@ var port = process.env.PORT || 8090; 		// set our port
 
 
 // set up the routes
-require('./app/apiRoutes')(app);
-require('./app/eventRoutes')(app);
+require('./app/routes')(app);
+
 app.listen(port);
 console.log('port ' + port);
 exports = module.exports = app;
