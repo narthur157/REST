@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // application/x-www-form-ur
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 
-var port = process.env.PORT || 8090; 		// set our port
+var port = process.env.PORT || 4000; 		// set our port
 
 
 // set up the routes
